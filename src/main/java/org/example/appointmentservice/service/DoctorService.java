@@ -48,4 +48,20 @@ public class DoctorService {
                 .status(HttpStatus.SERVICE_UNAVAILABLE)
                 .body(error);
     }
+
+    public ResponseEntity<?> searchDoctor(String name) {
+
+        Object[] doctors = restClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .scheme("http")
+                        .host("localhost")
+                        .port(8082)
+                        .path("/api/v1/doctors/search")
+                        .queryParam("name", name)
+                        .build())
+                .retrieve()
+                .body(Object[].class);
+
+        return ResponseEntity.ok(doctors);
+    }
 }
